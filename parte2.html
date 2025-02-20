@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lições parte 2</title>
+    <style>
+        body { margin: 0; font-family: Arial, sans-serif; background-color: gray; }
+        
+        .header {
+            background-color: black;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            box-shadow: 0 4px 2px -2px gray;
+        }
+
+        h1 { color: aliceblue; font-family: Verdana, Geneva, Tahoma, sans-serif; }
+        
+        .content {
+            padding-top: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .pdf-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+       
+        .pdf-card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .pdf-card a {
+            display: block;
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .pdf-card button {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .pdf-card button:hover {
+            background-color: darkred;
+        }
+
+        iframe {
+            width: 100%;
+            height: 500px;
+            display: none;
+            border: none;
+            margin-top: 20px;
+        }
+        #closeViewer{
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>Lições</h1>
+        <a href="add.licoes.html" class="add-lessons">Add Lições</a>
+    </header>
+    
+    <div class="content">
+        <h2>Lições</h2>
+        <div class="pdf-container" id="pdfList"></div>
+        <iframe id="pdfViewer"></iframe>
+        <button id="closeViewer">Fechar</button>
+    </div>
+   
+    <script>
+       document.addEventListener("DOMContentLoaded", function() {
+            loadPDFs();
+
+            const closeButton = document.getElementById("closeViewer");
+            const pdfViewer = document.getElementById("pdfViewer");
+
+            function loadPDFs() {
+                const savedFiles = JSON.parse(localStorage.getItem("pdfFiles")) || [];
+                savedFiles.forEach(displayPDF);
+            }
+
+            function displayPDF(fileData) {
+                const listItem = document.createElement("div");
+                listItem.classList.add("pdf-card");
+
+                const link = document.createElement("a");
+                link.href = fileData.data;
+                link.textContent = fileData.name;
+                link.onclick = function(event) {
+                    event.preventDefault();
+                    pdfViewer.src = fileData.data;
+                    pdfViewer.style.display = "block";
+                    closeButton.style.display = "block"; 
+                };
+
+                const deleteButton = document.createElement("button");
+                deleteButton.textContent = "Excluir";
+                deleteButton.onclick = function() {
+                    deletePDF(fileData, listItem);
+                };
+
+                listItem.appendChild(link);
+                listItem.appendChild(deleteButton);
+                document.getElementById("pdfList").appendChild(listItem);
+            }
+
+            function deletePDF(fileData, listItem) {
+                const confirmdelete = confirm('Tem certeza que quer excluir essa lição?');
+                if (confirmdelete) {
+                    let savedFiles = JSON.parse(localStorage.getItem("pdfFiles")) || [];
+                    savedFiles = savedFiles.filter(file => file.name !== fileData.name);
+                    localStorage.setItem("pdfFiles", JSON.stringify(savedFiles));
+
+                    listItem.remove();
+                    alert(`O arquivo "${fileData.name}" foi excluído com sucesso!`);
+                } else {
+                    alert("A exclusão foi cancelada.");
+                }
+            }
+
+            
+            closeButton.addEventListener("click", function () {
+                pdfViewer.style.display = "none"; 
+                pdfViewer.src = "";  
+            });
+        });
+    </script>
+</body>
+</html>

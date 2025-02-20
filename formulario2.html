@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulários Salvos</title>
+    <style>
+        body { margin: 0; font-family: Arial, sans-serif; background-color: gray; text-align: center; }
+        
+        .header {
+            background-color: black;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            box-shadow: 0 4px 2px -2px gray;
+        }
+
+        h1 { color: aliceblue; font-family: Verdana, Geneva, Tahoma, sans-serif; }
+        
+        .content {
+            padding-top: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .link-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .link-card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .link-card a {
+            display: block;
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .link-card button {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .link-card button:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>Formulários</h1>
+        <a href="addform.html" class="add-form">Adicionar Formulário</a>
+    </header>
+    
+    <div class="content">
+        <h2>Formulários Salvos</h2>
+        <div class="link-container" id="formList"></div>
+    </div>
+   
+    <script>
+       document.addEventListener("DOMContentLoaded", function() {
+            loadFormLinks();
+
+            function loadFormLinks() {
+                const savedLinks = JSON.parse(localStorage.getItem("formLinks")) || [];
+                savedLinks.forEach(displayFormLink);
+            }
+
+            function displayFormLink(link) {
+                const listItem = document.createElement("div");
+                listItem.classList.add("link-card");
+
+                const linkElement = document.createElement("a");
+                linkElement.href = link;
+                linkElement.textContent = link;
+                linkElement.target = "_blank";
+
+                const deleteButton = document.createElement("button");
+                deleteButton.textContent = "Excluir";
+                deleteButton.onclick = function() {
+                    deleteFormLink(link, listItem);
+                };
+
+                listItem.appendChild(linkElement);
+                listItem.appendChild(deleteButton);
+                document.getElementById("formList").appendChild(listItem);
+            }
+
+            function deleteFormLink(link, listItem) {
+                const confirmDelete = confirm('Tem certeza que quer excluir esse link?');
+                if (confirmDelete) {
+                    let savedLinks = JSON.parse(localStorage.getItem("formLinks")) || [];
+                    savedLinks = savedLinks.filter(item => item !== link);
+                    localStorage.setItem("formLinks", JSON.stringify(savedLinks));
+                    listItem.remove();
+                    alert("Link removido com sucesso!");
+                } else {
+                    alert("A exclusão foi cancelada.");
+                }
+            }
+        });
+    </script>
+</body>
+</html>
