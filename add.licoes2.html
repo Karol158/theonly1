@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar Lições</title>
+
+    <style>
+        body{
+            background-color: gray;
+        }
+        div{
+            background-color: aliceblue;
+            display: grid;
+            place-items: center;
+             height: 500px;
+             width: 500px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h2>Adicione as Lições</h2>
+    <input type="file" id="pdfInput" accept="application/pdf">
+    <button onclick="uploadPDF()">Enviar</button>
+    </div>
+   
+    <script>
+        function uploadPDF() {
+            const fileInput = document.getElementById("pdfInput");
+            const file = fileInput.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const pdfData = {
+                        name: file.name,
+                        data: event.target.result
+                    };
+
+                    let savedPDFs = JSON.parse(localStorage.getItem("pdfFiles")) || [];
+                    savedPDFs.push(pdfData);
+                    localStorage.setItem("pdfFiles", JSON.stringify(savedPDFs));
+
+                    window.location.href = "parte2.html"; 
+                };
+                reader.readAsDataURL(file);
+            } else {
+                alert("Por favor, selecione um arquivo PDF.");
+            }
+        }
+    </script>
+</body>
+</html>

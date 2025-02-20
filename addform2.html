@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar Formulários</title>
+    <style>
+        body {
+            background-color: gray;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .container {
+            background-color: aliceblue;
+            display: inline-block;
+            padding: 20px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Adicione os Formulários</h2>
+        <input type="text" id="formLink" placeholder="Cole o link do formulário">
+        <button onclick="addFormLink()">Adicionar</button>
+    </div>
+    
+    <script>
+        function addFormLink() {
+            const linkInput = document.getElementById("formLink").value.trim();
+            if (!linkInput) {
+                alert("Por favor, insira um link válido.");
+                return;
+            }
+            
+            let savedLinks = JSON.parse(localStorage.getItem("formLinks")) || [];
+            savedLinks.push(linkInput);
+            localStorage.setItem("formLinks", JSON.stringify(savedLinks));
+            
+            window.location.href = "formulario2.html"; 
+        }
+    </script>
+</body>
+</html>
