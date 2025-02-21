@@ -5,7 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulários Salvos</title>
     <style>
-        body { margin: 0; font-family: Arial, sans-serif; background-color: gray; text-align: center; }
+        body { 
+            margin: 0; 
+            font-family: Arial, sans-serif; 
+            background-color: gray; 
+            text-align: center; 
+        }
         
         .header {
             background-color: black;
@@ -23,7 +28,10 @@
             box-shadow: 0 4px 2px -2px gray;
         }
 
-        h1 { color: aliceblue; font-family: Verdana, Geneva, Tahoma, sans-serif; }
+        h1 { 
+            color: aliceblue; 
+            font-family: Verdana, Geneva, Tahoma, sans-serif; 
+        }
         
         .content {
             padding-top: 80px;
@@ -36,7 +44,7 @@
 
         .link-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 15px;
             width: 90%;
             max-width: 1200px;
@@ -72,16 +80,37 @@
         .link-card button:hover {
             background-color: darkred;
         }
+        .botao {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color:gray;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            border: none;
+        }
+        .addform{
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color:gray;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            border: none;
+        }
     </style>
 </head>
 <body>
     <header class="header">
         <h1>Formulários</h1>
-        <a href="addform.html" class="add-form">Adicionar Formulário</a>
+        <a href="addform.html" class="addform">Adicionar Formulário</a>
+        <a href="index.html" class="botao">Voltar</a>
     </header>
     
     <div class="content">
-        <h2>Formulários Salvos</h2>
+        <h2>Formulários Fase 1</h2>
         <div class="link-container" id="formList"></div>
     </div>
    
@@ -90,8 +119,9 @@
             loadFormLinks();
 
             function loadFormLinks() {
-                const savedLinks = JSON.parse(localStorage.getItem("formLinks")) || [];
-                savedLinks.forEach(displayFormLink);
+                let savedLinks = JSON.parse(localStorage.getItem("formLinks1")) || [];
+
+                savedLinks.forEach(displayFormLink); // Agora todos os links serão carregados
             }
 
             function displayFormLink(link) {
@@ -117,9 +147,9 @@
             function deleteFormLink(link, listItem) {
                 const confirmDelete = confirm('Tem certeza que quer excluir esse link?');
                 if (confirmDelete) {
-                    let savedLinks = JSON.parse(localStorage.getItem("formLinks")) || [];
+                    let savedLinks = JSON.parse(localStorage.getItem("formLinks1")) || [];
                     savedLinks = savedLinks.filter(item => item !== link);
-                    localStorage.setItem("formLinks", JSON.stringify(savedLinks));
+                    localStorage.setItem("formLinks1", JSON.stringify(savedLinks));
                     listItem.remove();
                     alert("Link removido com sucesso!");
                 } else {
