@@ -84,20 +84,52 @@
         #closeViewer{
             background-color: red;
         }
+        .botao {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color:gray;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            border: none;
+        }
+        .addlicoes{
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color:gray;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            border: none;
+        }
+        .Fase2{
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color:gray;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            border: none;
+        }
     </style>
 </head>
 <body>
     <header class="header">
         <h1>Lições</h1>
-        <a href="add.licoes.html" class="add-lessons">Add Lições</a>
-        <a href="parte2.html" class="add-lessons">Fase 2</a>
+        <a href="add.licoes.html" class="addlicoes">Add Lições</a>
+        <a href="parte2.html" class="Fase2">Fase 2</a>
+        <a href="index.html" class="botao">Voltar</a>
     </header>
-    
+   
     <div class="content">
-        <h2>Lições</h2>
+        <h2>Lições Fase 1</h2>
         <div class="pdf-container" id="pdfList"></div>
         <iframe id="pdfViewer"></iframe>
         <button id="closeViewer">Fechar</button>
+    
     </div>
    
     <script>
@@ -108,8 +140,8 @@
             const pdfViewer = document.getElementById("pdfViewer");
 
             function loadPDFs() {
-                const savedFiles = JSON.parse(localStorage.getItem("pdfFiles")) || [];
-                savedFiles.forEach(displayPDF);
+                const savedPDFs = JSON.parse(localStorage.getItem("pdfFilesParte1")) || [];
+                savedPDFs.forEach(displayPDF);
             }
 
             function displayPDF(fileData) {
@@ -140,9 +172,9 @@
             function deletePDF(fileData, listItem) {
                 const confirmdelete = confirm('Tem certeza que quer excluir essa lição?');
                 if (confirmdelete) {
-                    let savedFiles = JSON.parse(localStorage.getItem("pdfFiles")) || [];
+                    let savedFiles = JSON.parse(localStorage.getItem("pdfFilesParte1")) || [];
                     savedFiles = savedFiles.filter(file => file.name !== fileData.name);
-                    localStorage.setItem("pdfFiles", JSON.stringify(savedFiles));
+                    localStorage.setItem("pdfFilesParte1", JSON.stringify(savedFiles));
 
                     listItem.remove();
                     alert(`O arquivo "${fileData.name}" foi excluído com sucesso!`);
