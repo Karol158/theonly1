@@ -16,6 +16,16 @@
             padding: 20px;
             border-radius: 10px;
         }
+        .botao {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: gray;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            border: none;
+        }
     </style>
 </head>
 <body>
@@ -23,22 +33,25 @@
         <h2>Adicione os Formulários</h2>
         <input type="text" id="formLink" placeholder="Cole o link do formulário">
         <button onclick="addFormLink()">Adicionar</button>
+        <a href="formulario.html" class="botao">Voltar</a>
     </div>
     
     <script>
-        function addFormLink() {
-            const linkInput = document.getElementById("formLink").value.trim();
-            if (!linkInput) {
-                alert("Por favor, insira um link válido.");
-                return;
-            }
-            
-            let savedLinks = JSON.parse(localStorage.getItem("formLinks")) || [];
-            savedLinks.push(linkInput);
-            localStorage.setItem("formLinks", JSON.stringify(savedLinks));
-            
-            window.location.href = "formulario.html"; 
+         function addFormLink() {
+        const linkInput = document.getElementById("formLink").value.trim();
+        const urlPattern = /^(https?:\/\/[^\s$.?#].[^\s]*)$/;
+
+        if (!urlPattern.test(linkInput)) {
+            alert("Por favor, insira um link válido da internet.");
+            return;
         }
+
+        let savedLinks = JSON.parse(localStorage.getItem("formLinks1")) || [];
+        savedLinks.push(linkInput);
+        localStorage.setItem("formLinks1", JSON.stringify(savedLinks));
+
+        window.location.href = "formulario.html";
+    }
     </script>
 </body>
 </html>
