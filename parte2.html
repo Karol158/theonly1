@@ -44,7 +44,6 @@
             padding: 20px;
         }
 
-       
         .pdf-card {
             background: white;
             padding: 15px;
@@ -81,19 +80,41 @@
             border: none;
             margin-top: 20px;
         }
-        #closeViewer{
+
+        #closeViewer {
             background-color: red;
+        }
+        .botao {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color:gray;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            border: none;
+        }
+        .addlicoes{
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color:gray;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            border: none;
         }
     </style>
 </head>
 <body>
     <header class="header">
         <h1>Lições</h1>
-        <a href="add.licoes2.html" class="add-lessons">Add Lições</a>
+        <a href="add.licoes2.html" class="addlicoes">Add Lições</a>
+        <a href="index.html" class="botao">Voltar</a>
     </header>
     
     <div class="content">
-        <h2>Lições</h2>
+        <h2>Lições Fase 2</h2>
         <div class="pdf-container" id="pdfList"></div>
         <iframe id="pdfViewer"></iframe>
         <button id="closeViewer">Fechar</button>
@@ -107,7 +128,8 @@
             const pdfViewer = document.getElementById("pdfViewer");
 
             function loadPDFs() {
-                const savedFiles = JSON.parse(localStorage.getItem("pdfFiles")) || [];
+                
+                const savedFiles = JSON.parse(localStorage.getItem("pdfFilesParte2")) || [];
                 savedFiles.forEach(displayPDF);
             }
 
@@ -139,9 +161,9 @@
             function deletePDF(fileData, listItem) {
                 const confirmdelete = confirm('Tem certeza que quer excluir essa lição?');
                 if (confirmdelete) {
-                    let savedFiles = JSON.parse(localStorage.getItem("pdfFiles")) || [];
+                    let savedFiles = JSON.parse(localStorage.getItem("pdfFilesParte2")) || [];
                     savedFiles = savedFiles.filter(file => file.name !== fileData.name);
-                    localStorage.setItem("pdfFiles", JSON.stringify(savedFiles));
+                    localStorage.setItem("pdfFilesParte2", JSON.stringify(savedFiles));
 
                     listItem.remove();
                     alert(`O arquivo "${fileData.name}" foi excluído com sucesso!`);
@@ -150,7 +172,6 @@
                 }
             }
 
-            
             closeButton.addEventListener("click", function () {
                 pdfViewer.style.display = "none"; 
                 pdfViewer.src = "";  
