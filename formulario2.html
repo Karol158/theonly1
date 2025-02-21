@@ -72,16 +72,37 @@
         .link-card button:hover {
             background-color: darkred;
         }
+        .botao {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color:gray;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            border: none;
+        }
+        .addform{
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color:gray;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            border: none;
+        }
     </style>
 </head>
 <body>
     <header class="header">
         <h1>Formulários</h1>
-        <a href="addform.html" class="add-form">Adicionar Formulário</a>
+        <a href="addform2.html" class="addform">Adicionar Formulário</a>
+        <a href="index.html" class="botao">Voltar</a>
     </header>
     
     <div class="content">
-        <h2>Formulários Salvos</h2>
+        <h2>Formulários Fase 2</h2>
         <div class="link-container" id="formList"></div>
     </div>
    
@@ -90,7 +111,7 @@
             loadFormLinks();
 
             function loadFormLinks() {
-                const savedLinks = JSON.parse(localStorage.getItem("formLinks")) || [];
+                const savedLinks = JSON.parse(localStorage.getItem("formLinks2")) || [];
                 savedLinks.forEach(displayFormLink);
             }
 
@@ -117,9 +138,9 @@
             function deleteFormLink(link, listItem) {
                 const confirmDelete = confirm('Tem certeza que quer excluir esse link?');
                 if (confirmDelete) {
-                    let savedLinks = JSON.parse(localStorage.getItem("formLinks")) || [];
+                    let savedLinks = JSON.parse(localStorage.getItem("formLinks2")) || [];
                     savedLinks = savedLinks.filter(item => item !== link);
-                    localStorage.setItem("formLinks", JSON.stringify(savedLinks));
+                    localStorage.setItem("formLinks2", JSON.stringify(savedLinks));
                     listItem.remove();
                     alert("Link removido com sucesso!");
                 } else {
